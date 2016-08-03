@@ -2,6 +2,10 @@
 
 This library extends the Azure blob storage functionality within the excellent [ImageProcessor](http://imageprocessor.org) by [James jackson-South](https://about.me/james_south) to support management of configuration settings via the ```<appSettings/>``` configuration section.
 
+## Purpose
+
+The allow a project to benefit from the ImageProcessor library and its ability to offload media to external blob storage accounts while removing the need for sensitive, environment specific information to be stored within library specific configuration files.
+
 ## Implementation
 
 The library provides derived implementations of the ```AzureBlobCache``` and ```CloudImageService``` that look to read and augment the standard configuration section settings with values provided within the ```<appSettings/>``` section.
@@ -68,6 +72,8 @@ The same settings keys can be set within the configuration, however additionally
 ```
 
 ## Configuring Storm.UmbracoFileSystemProviders.Azure
+
+Once installed via nuget the ```FileSystemProviders.config```file will be updated to use the derived library implementation:
 
 ```xml
   <Provider alias="media" type="Storm.UmbracoFileSystemProviders.Azure.FromConfigAzureFileSystem, Storm.UmbracoFileSystemProviders.Azure" />
