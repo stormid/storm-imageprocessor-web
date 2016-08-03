@@ -81,30 +81,33 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="..\..\VersionAssemblyInfo.cs">
+      <Link>Properties\VersionAssemblyInfo.cs</Link>
+    </Compile>
     <Compile Include="Extensions\DictionaryAddOrUpdateExtensions.cs" />
     <Compile Include="Plugins\AzureBlobCache\FromConfigAzureBlobCache.cs" />
     <Compile Include="Services\FromConfigCloudImageService.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>
-    <None Include="content\config\imageprocessor\cache.config.uninstall.xdt">
+    <Content Include="content\config\imageprocessor\cache.config.uninstall.xdt">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
-    </None>
-    <None Include="content\config\imageprocessor\security.config.uninstall.xdt">
+    </Content>
+    <Content Include="content\config\imageprocessor\security.config.uninstall.xdt">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
-    </None>
-    <None Include="content\web.config.uninstall.xdt">
+    </Content>
+    <Content Include="content\web.config.uninstall.xdt">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
-    </None>
-    <None Include="content\web.config.install.xdt">
+    </Content>
+    <Content Include="content\web.config.install.xdt">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
-    </None>
-    <None Include="content\config\imageprocessor\cache.config.install.xdt">
+    </Content>
+    <Content Include="content\config\imageprocessor\cache.config.install.xdt">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
-    </None>
-    <None Include="content\config\imageprocessor\security.config.install.xdt">
+    </Content>
+    <Content Include="content\config\imageprocessor\security.config.install.xdt">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
-    </None>
+    </Content>
     <None Include="packages.config" />
   </ItemGroup>
   <ItemGroup />
