@@ -1,7 +1,7 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
-<caching currentCache="FromConfigAzureBlobCache" xmlns:xdt="http://schemas.microsoft.com/XML-Document-Transform" xmlns:xs="http://www.w3.org/2001/XMLSchema" xdt:Transform="SetAttributes">
+<caching currentCache="DiskCache" xmlns:xdt="http://schemas.microsoft.com/XML-Document-Transform" xmlns:xs="http://www.w3.org/2001/XMLSchema" xdt:Transform="SetAttributes">
   <caches>
-  <cache name="FromConfigAzureBlobCache" type="Storm.ImageProcessor.Web.Plugins.AzureBlobCache.FromConfigAzureBlobCache, Storm.ImageProcessor.Web" maxDays="365" xdt:Transform="Insert" xdt:Locator="Match(type)">
+    <cache name="FromConfigAzureBlobCache" type="Storm.ImageProcessor.Web.Plugins.AzureBlobCache.FromConfigAzureBlobCache, Storm.ImageProcessor.Web" maxDays="365" xdt:Transform="Remove" xdt:Locator="Match(type)">
       <settings>
         <setting key="CachedBlobContainer" value="cache" />
         <setting key="UseCachedContainerInUrl" value="true" />

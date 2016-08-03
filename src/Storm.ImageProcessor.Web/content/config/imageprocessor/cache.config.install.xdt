@@ -1,0 +1,14 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<caching xmlns:xdt="http://schemas.microsoft.com/XML-Document-Transform" xmlns:xs="http://www.w3.org/2001/XMLSchema">
+  <caches>
+    <cache name="FromConfigAzureBlobCache" type="Storm.ImageProcessor.Web.Plugins.AzureBlobCache.FromConfigAzureBlobCache, Storm.ImageProcessor.Web" maxDays="365" xdt:Transform="InsertIfMissing" xdt:Locator="Match(type)">
+      <settings>
+        <setting key="CachedBlobContainer" value="cache" />
+        <setting key="UseCachedContainerInUrl" value="true" />
+        <setting key="CachedCDNTimeout" value="1000" />
+        <setting key="StreamCachedImage" value="false" />
+        <setting key="SourceBlobContainer" value="media" />
+      </settings>
+    </cache>
+  </caches>
+</caching>
