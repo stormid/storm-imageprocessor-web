@@ -28,7 +28,7 @@ GitVersion versionInfo                      = null;
 // TASKS
 //////////////////////////////////////////////////////////////////////
 
-Setup(() => {
+Setup(ctx => {
     if(!FileExists(solutionPath)) throw new Exception(string.Format("Solution file not found - {0}", solutionPath.ToString()));
     solution = ParseSolution(solutionPath.ToString());
     Information("[Setup] Using Solution '{0}'", solutionPath.ToString());
@@ -153,12 +153,6 @@ Task("Create-NuGet-Packages")
     }    
 });
 
-
-Task("Package")
-    .IsDependentOn("Build")
-    .IsDependentOn("Create-NuGet-Packages")
-    .Does(() => { });
-
 Task("Update-AppVeyor-Build-Number")
     .IsDependentOn("Update-Version-Info")
     .WithCriteria(() => AppVeyor.IsRunningOnAppVeyor)
@@ -167,17 +161,38 @@ Task("Update-AppVeyor-Build-Number")
     AppVeyor.UpdateBuildVersion(versionInfo.FullSemVer +"." +AppVeyor.Environment.Build.Number);
 });
 
+Task("Upload-AppVeyor-Artifacts")
+    .IsDependentOn("Package")
+    .WithCriteria(() => AppVeyor.IsRunningOnAppVeyor)
+    .Does(() =>
+{
+    foreach(var nupkg in System.IO.Directory.EnumerateFiles(artifacts.ToString() +@"\packages\", "*.nupkg")) {
+        var artifact = MakeAbsolute(File(nupkg));
+        AppVeyor.UploadArtifact(artifact, settings => settings
+            .SetArtifactType(AppVeyorUploadArtifactType.NuGetPackage)
+        );
+    }
+});
+
 //////////////////////////////////////////////////////////////////////
 // TASK TARGETS
 //////////////////////////////////////////////////////////////////////
 
 Task("Default")
     .IsDependentOn("Update-Version-Info")
+    .IsDependentOn("Build");
+
+Task("CI")
     .IsDependentOn("Update-AppVeyor-Build-Number")
-    .IsDependentOn("Build")
-    .IsDependentOn("Run-Unit-Tests")
     .IsDependentOn("Package")
-    ;
+    .IsDependentOn("Run-Unit-Tests")
+    .IsDependentOn("Create-NuGet-Packages")
+    .IsDependentOn("Upload-AppVeyor-Artifacts");
+
+Task("Package")
+    .IsDependentOn("Default")
+    .IsDependentOn("Create-NuGet-Packages");
+
 
 //////////////////////////////////////////////////////////////////////
 // EXECUTION
