@@ -1,0 +1,10 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<configuration xmlns:xdt="http://schemas.microsoft.com/XML-Document-Transform" xmlns:xs="http://www.w3.org/2001/XMLSchema" xdt:Transform="SetAttributes">
+  <appSettings xdt:Transform="InsertIfMissing">
+    <add key="AzureBlobCache.CachedStorageAccount" value="DefaultEndpointsProtocol=https;AccountName=[CacheAccountName];AccountKey=[CacheAccountKey]" xdt:Transform="InsertIfMissing" xdt:Locator="Match(key)" />
+    <add key="AzureBlobCache.CachedCDNRoot" value="[CdnRootUrl]" xdt:Transform="InsertIfMissing" xdt:Locator="Match(key)" />
+    <add key="AzureBlobCache.SourceStorageAccount" value="" xdt:Transform="InsertIfMissing" xdt:Locator="Match(key)" />
+
+    <add key="CloudImageService.Host" value="https://[account].blob.core.windows.net/media/" xdt:Transform="InsertIfMissing" xdt:Locator="Match(key)" />
+  </appSettings>
+</configuration>

@@ -1,0 +1,10 @@
+﻿<security xmlns:xdt="http://schemas.microsoft.com/XML-Document-Transform" xmlns:xs="http://www.w3.org/2001/XMLSchema">
+  <services>
+    <service prefix="media/" name="CloudImageService" type="Storm.ImageProcessor.Web.Services.FromConfigCloudImageService, Storm.ImageProcessor.Web" xdt:Transform="InsertIfMissing" xdt:Locator="Match(type)">
+      <settings>
+        <setting key="MaxBytes" value="8194304"/>
+        <setting key="Timeout" value="30000"/>
+      </settings>
+    </service>
+  </services>
+</security>

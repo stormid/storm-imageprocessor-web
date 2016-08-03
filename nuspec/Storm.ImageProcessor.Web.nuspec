@@ -1,0 +1,21 @@
+<?xml version="1.0"?>
+<package >
+  <metadata>
+    <id>Storm.ImageProcessor.Web</id>
+    <title>Storm.ImageProcessor.Web</title>
+    <authors>Phil Oyston</authors>
+    <owners>Phil Oyston</owners>
+    <iconUrl>http://stormid.com/media/48267/logo.jpg</iconUrl>
+    <licenseUrl>http://stormid.com</licenseUrl>
+    <projectUrl>http://stormid.com</projectUrl>
+    <requireLicenseAcceptance>false</requireLicenseAcceptance>
+    <description>ImageProcessor extensions supporting configuration of azure blob storage from application settings</description>    
+    <dependencies>
+      <dependency id="ImageProcessor.Web.Plugins.AzureBlobCache" version="1.1.1" />
+      <dependency id="ImageProcessor" version="2.4.0" />
+    </dependencies>
+  </metadata>
+  <files>
+    <file src="**\*" target="" />
+  </files>
+</package>
