@@ -3,8 +3,8 @@
   <appSettings xdt:Transform="InsertIfMissing">
     <add key="AzureBlobCache.CachedStorageAccount" value="DefaultEndpointsProtocol=https;AccountName=[CacheAccountName];AccountKey=[CacheAccountKey]" xdt:Transform="InsertIfMissing" xdt:Locator="Match(key)" />
     <add key="AzureBlobCache.CachedCDNRoot" value="[CdnRootUrl]" xdt:Transform="InsertIfMissing" xdt:Locator="Match(key)" />
-    <add key="AzureBlobCache.SourceStorageAccount" value="" xdt:Transform="InsertIfMissing" xdt:Locator="Match(key)" />
 
-    <add key="CloudImageService.Host" value="https://[account].blob.core.windows.net/media/" xdt:Transform="InsertIfMissing" xdt:Locator="Match(key)" />
+    <add key="CloudImageService.Host" value="https://[account].blob.core.windows.net" xdt:Transform="InsertIfMissing" xdt:Locator="Match(key)" />
+    <add key="CloudImageService.Container" value="media" xdt:Transform="InsertIfMissing" xdt:Locator="Match(key)" />
   </appSettings>
 </configuration>
