@@ -1,4 +1,0 @@
-﻿<?xml version="1.0"?>
-<FileSystemProviders xdt:Transform="InsertIfMissing" xmlns:xdt="http://schemas.microsoft.com/XML-Document-Transform" xmlns:xs="http://www.w3.org/2001/XMLSchema">
-  <Provider alias="media" type="Storm.UmbracoFileSystemProviders.Azure.FromConfigAzureFileSystem, Storm.UmbracoFileSystemProviders.Azure" xdt:Transform="Remove" xdt:Locator="Match(type)" />
-</FileSystemProviders>

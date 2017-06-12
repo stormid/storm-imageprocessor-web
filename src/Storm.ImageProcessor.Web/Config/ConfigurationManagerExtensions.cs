@@ -1,7 +1,7 @@
 ﻿using System;
 using System.Configuration;
 
-namespace Storm.Config
+namespace Storm.ImageProcessor.Web.Config
 {
     internal static class ConfigurationManagerExtensions
     {

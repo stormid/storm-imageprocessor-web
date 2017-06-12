@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using System.Configuration;
 using System.Linq;
 using ImageProcessor.Web.Services;
-using Storm.Config;
+using Storm.ImageProcessor.Web.Config;
 using Storm.ImageProcessor.Web.Extensions;
 
 namespace Storm.ImageProcessor.Web.Services
