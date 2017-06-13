@@ -10,16 +10,12 @@ The allow a project to benefit from the ImageProcessor library and its ability t
 
 The library provides derived implementations of the ```AzureBlobCache``` and ```CloudImageService``` that look to read and augment the standard configuration section settings with values provided within the ```<appSettings/>``` section.
 
-In addition there is an Umbraco library that itself extends James' [AzureFileSystem](https://github.com/JimBobSquarePants/UmbracoFileSystemProviders.Azure) in a similar way, to support configuration via ```<appSettings/>```.
-
 ## Installation
 
 There are 2 separate nuget packages available, one specifically for ImageProcessor and the other specific to the file system abstraction within Umbraco.  If you are using this within an Umbraco project you will need both packages installed:
 
 ```powershell
 Install-Package Storm.ImageProcessor.Web
-
-Install-Package Storm.UmbracoFileSystemProviders.Azure
 ```
 
 ## Configuring Storm.ImageProcessor.Web
@@ -39,6 +35,7 @@ Once installed via nuget both the ```cache.config``` and ```security.config``` f
       </settings>
     </cache>
 ```
+Once configured you can set the `currentCache` value to the name of your custom cache.
 
 The same settings keys can be set within the configuration, however additionally the ```web.config``` will be searched for updates to any supplied values, if a value is found within the ```<appSettings/>``` then its value will override any set in the ```cache.config```:
 
@@ -46,19 +43,20 @@ The same settings keys can be set within the configuration, however additionally
   <appSettings>
     <add key="AzureBlobCache.CachedStorageAccount" value="DefaultEndpointsProtocol=https;AccountName=[CacheAccountName];AccountKey=[CacheAccountKey]" />
     <add key="AzureBlobCache.CachedCDNRoot" value="[CdnRootUrl]" />
-    <add key="AzureBlobCache.SourceStorageAccount" value="DefaultEndpointsProtocol=https;AccountName=[StorageAccountName];AccountKey=[StorageAccountName]" />
-
-    <add key="CloudImageService.Host" value="https://[account].blob.core.windows.net/media/" />
   </appSettings>
 ```
 
 ### config/imageprocessor/security.config
 
 ```xml
+    <!-- Minimal required configuration -->
+    <service prefix="media/" name="CloudImageService" type="Storm.ImageProcessor.Web.Services.FromConfigCloudImageService, Storm.ImageProcessor.Web" />    
+    
+    <!-- Optional configuration -->
     <service prefix="media/" name="CloudImageService" type="Storm.ImageProcessor.Web.Services.FromConfigCloudImageService, Storm.ImageProcessor.Web">
       <settings>
-        <setting key="MaxBytes" value="8194304"/>
-        <setting key="Timeout" value="30000"/>
+        <setting key="MaxBytes" value="8194304"/> <!-- sets the default value -->
+        <setting key="AppSettingsPrefix" value="MyPrefix"/> <!-- alters the detault appsettings prefix from 'CloudImageService' to 'MyPrefix' -->
       </settings>
     </service>
 ```
@@ -67,24 +65,7 @@ The same settings keys can be set within the configuration, however additionally
 
 ```xml
   <appSettings>
-    <add key="CloudImageService.Host" value="https://[account].blob.core.windows.net/media/" />
+    <add key="CloudImageService.Host" value="https://[account].blob.core.windows.net/media" />
+    <add key="MyPrefix.Host" value="https://[account].blob.core.windows.net/media" /> <!-- if 'AppSettingsPrefix' altered as shown above -->
   </appSettings>
-```
-
-## Configuring Storm.UmbracoFileSystemProviders.Azure
-
-Once installed via nuget the ```FileSystemProviders.config```file will be updated to use the derived library implementation:
-
-```xml
-  <Provider alias="media" type="Storm.UmbracoFileSystemProviders.Azure.FromConfigAzureFileSystem, Storm.UmbracoFileSystemProviders.Azure" />
-```
-
-The same settings keys can be set within the configuration, however additionally the ```web.config``` will be searched for updates to any supplied values, if a value is found within the ```<appSettings/>``` then its value will override any set in the ```cache.config```:
-
-```xml
-  <appSettings>
-    <add key="AzureBlobFileSystem.RootUrl" value="https://[account].blob.core.windows.net/" />
-    <add key="AzureBlobFileSystem.ConnectionString" value="DefaultEndpointsProtocol=https;AccountName=[AccountName];AccountKey=[AccountKey]" />
-  </appSettings>
-
 ```
