@@ -6,10 +6,11 @@ using System.Threading.Tasks;
 using ImageProcessor.Web.Helpers;
 using ImageProcessor.Web.Services;
 using Storm.ImageProcessor.Web.Config;
+using Storm.ImageProcessor.Web.Extensions;
 
 namespace Storm.ImageProcessor.Web.Services
 {
-    public class FromConfigCloudImageService : IImageService
+    public sealed class FromConfigCloudImageService : IImageService
     {
         private const string AppSettingsPrefix = nameof(CloudImageService);
 
@@ -68,15 +69,36 @@ namespace Storm.ImageProcessor.Web.Services
             return ImageHelpers.IsValidImageExtension(path);
         }
 
-        private Dictionary<string, string> ExpandSettings(Dictionary<string, string> settings)
+        private void ExpandSettings(Dictionary<string, string> settings)
         {
+            // Find settings prefix...
             var settingsPrefix = $"{(Settings.ContainsKey(nameof(AppSettingsPrefix)) ? Settings[nameof(AppSettingsPrefix)] : AppSettingsPrefix)}.";
 
-            var appSettings = defaultSettings.Union(ConfigurationManager.AppSettings.AllKeys
-                .Where(x => x.StartsWith(settingsPrefix))
-                .ToDictionary(k => k.Replace(settingsPrefix, ""), v => v.FromAppSettings()));
+            // ...create settings dictionary...
+            var appSettings = new Dictionary<string, string>(defaultSettings);
 
-            return settings.Union(appSettings).ToDictionary(k => k.Key, v => v.Value);
+            // ...read app settings values...
+            var fromAppSettings = ConfigurationManager.AppSettings.AllKeys
+                .Where(x => x.StartsWith(settingsPrefix))
+                .ToDictionary(
+                    k => k.Replace(settingsPrefix, ""),
+                    v => v.FromAppSettings()
+                );
+
+            // ...override with ImageService defined settings...
+            foreach (var value in settings)
+            {
+                appSettings.AddOrUpdate(value.Key, value.Value);
+            }
+
+            // ...override with AppSettings defined settings...
+            foreach (var value in fromAppSettings)
+            {
+                appSettings.AddOrUpdate(value.Key, value.Value);
+            }
+
+            // ...Updates class settings
+            Settings = appSettings;
         }
 
         /// <summary>
@@ -109,9 +131,9 @@ namespace Storm.ImageProcessor.Web.Services
         /// </returns>
         public async Task<byte[]> GetImage(object id)
         {
-            var settings = ExpandSettings(Settings);
+            ExpandSettings(Settings);
 
-            return await GetImage(id, settings, Prefix, WhiteList).ConfigureAwait(false);
+            return await GetImage(id, Settings, Prefix, WhiteList).ConfigureAwait(false);
         }
     }
 }
